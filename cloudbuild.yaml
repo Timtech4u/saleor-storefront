@@ -1,0 +1,13 @@
+steps:
+  # build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/mercuriemart/pwa', '.']
+  # push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/mercuriemart/pwa']
+  # Deploy container image to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'run', 'deploy', 'app', '--image', 'gcr.io/mercuriemart/pwa', '--region', 'us-central1']
+images:
+- gcr.io/mercuriemart/pwa
+timeout: 1200s
